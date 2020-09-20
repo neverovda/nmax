@@ -4,9 +4,10 @@ module Nmax
       @size = ARGV[0].to_i
       @numbers = []
 
-      STDIN.each do |line|
+      $stdin.each do |line|
         add_nums_to_result nums(line)
       end
+      puts '' if @numbers.empty?
       puts @numbers
     end
 
@@ -34,5 +35,3 @@ module Nmax
     end
   end
 end
-
-Nmax.run
