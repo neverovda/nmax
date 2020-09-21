@@ -1,6 +1,8 @@
 module Nmax
   class << self
     def run
+      parameter_check
+      return if wrong_args?
       @size = ARGV[0].to_i
       @numbers = []
 
@@ -12,6 +14,18 @@ module Nmax
     end
 
     private
+
+    def parameter_check
+      warn 'Nmax must receive one argument (number). Example: nmax 100' if wrong_args?
+    end
+
+    def wrong_args?
+      ARGV.size != 1 || first_arg_not_number?
+    end
+
+    def first_arg_not_number?
+      !ARGV[0].match?(/^\d+$/)
+    end
 
     def nums(line)
       line.scan(/\d+/).map(&:to_i)

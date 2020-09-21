@@ -8,7 +8,7 @@ module TestNmaxHelper
     io.rewind
     $stdin = io
     ARGV.replace argv
-    @out, _err = capture_io do
+    @out, @err = capture_io do
       Nmax.run
     end
   end
@@ -16,18 +16,21 @@ end
 
 class TestNmax < Minitest::Test
   include TestNmaxHelper
-  attr_reader :out
+  attr_reader :out, :err
+  def setup
+    @strings = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit...']
+    @argv = ['1']
+    @error_out = "Nmax must receive one argument (number). Example: nmax 100\n"
+  end
+
   def test_without_numbers
-    strings = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit...']
-    argv = ['1']
-    start(strings, argv)
+    start(@strings, @argv)
     assert_equal("\n", out)
   end
 
   def test_with_one_number
     strings = ['one1one']
-    argv = ['1']
-    start(strings, argv)
+    start(strings, @argv)
     assert_equal("1\n", out)
   end
 
@@ -38,5 +41,23 @@ class TestNmax < Minitest::Test
     argv = ['3']
     start(strings, argv)
     assert_equal("3000\n2000\n1000\n", out)
+  end
+
+  def test_arguments_empty
+    argv = []
+    start(@strings, argv)
+    assert_equal(@error_out, err)
+  end
+
+  def test_argument_not_number
+    argv = ['arg1']
+    start(@strings, argv)
+    assert_equal(@error_out, err)
+  end
+
+  def test_many_arguments
+    argv = ['100', 'arg']
+    start(@strings, argv)
+    assert_equal(@error_out, err)
   end
 end
