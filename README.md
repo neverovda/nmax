@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/neverovda/nmax.svg?branch=master)](https://travis-ci.org/neverovda/nmax)
+[![Coverage Status](https://coveralls.io/repos/github/neverovda/nmax/badge.svg?branch=master)](https://coveralls.io/github/neverovda/nmax?branch=master)
 
 # nmax
 Output N maximum numbers from input stream

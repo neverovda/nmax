@@ -1,2 +1,3 @@
 /test/sample_files
 *.gem
+/coverage
