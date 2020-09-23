@@ -5,25 +5,32 @@ require 'minitest/autorun'
 require_relative '../lib/nmax.rb'
 
 module TestNmaxHelper
+  attr_reader :out, :err
   def start(strings, argv)
-    unless strings.empty?
-      io = StringIO.new
-      strings&.each { |str| io.puts str}
-      io.rewind
-      $stdin = io
-    else
-      $stdin = File.new('/dev/tty')
-    end
+    io_associate_with_terminal_device if strings.empty?
+    io_like_input_strings(strings) unless strings.empty?
     ARGV.replace argv
     @out, @err = capture_io do
       Nmax.run
     end
   end
+
+  private
+
+  def io_associate_with_terminal_device
+    $stdin = File.new('/dev/tty')
+  end
+
+  def io_like_input_strings(strings)
+    io = StringIO.new
+    strings.each { |str| io.puts str }
+    io.rewind
+    $stdin = io
+  end
 end
 
 class TestNmax < Minitest::Test
   include TestNmaxHelper
-  attr_reader :out, :err
   def setup
     @strings = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit...']
     @argv = ['1']
@@ -72,7 +79,7 @@ class TestNmax < Minitest::Test
   end
 
   def test_many_arguments
-    argv = ['100', 'arg']
+    argv = %w[100 arg]
     start(@strings, argv)
     assert_equal(@error_out, err)
   end
