@@ -6,10 +6,14 @@ require_relative '../lib/nmax.rb'
 
 module TestNmaxHelper
   def start(strings, argv)
-    io = StringIO.new
-    strings.each { |str| io.puts str}
-    io.rewind
-    $stdin = io
+    unless strings.empty?
+      io = StringIO.new
+      strings&.each { |str| io.puts str}
+      io.rewind
+      $stdin = io
+    else
+      $stdin = File.new('/dev/tty')
+    end
     ARGV.replace argv
     @out, @err = capture_io do
       Nmax.run
@@ -28,7 +32,7 @@ class TestNmax < Minitest::Test
 
   def test_without_numbers
     start(@strings, @argv)
-    assert_equal("\n", out)
+    assert_equal('', out)
   end
 
   def test_with_one_number
@@ -41,6 +45,15 @@ class TestNmax < Minitest::Test
     strings = ['L 1 ipsum 4 consectetur..1000',
                'Lorem 2 3000dolor am 3',
                'tetur 5 2000 elit']
+    argv = ['3']
+    start(strings, argv)
+    assert_equal("3000\n2000\n1000\n", out)
+  end
+
+  def test_the_same_big_numbers
+    strings = ['L 3000 ipsum 4 consectetur..1000',
+               'Lorem 2 3000dolor am 3',
+               'tetur2000 5 2000 elit']
     argv = ['3']
     start(strings, argv)
     assert_equal("3000\n2000\n1000\n", out)
@@ -62,5 +75,10 @@ class TestNmax < Minitest::Test
     argv = ['100', 'arg']
     start(@strings, argv)
     assert_equal(@error_out, err)
+  end
+
+  def test_stdin
+    start([], @argv)
+    assert_equal("Not reading from stdin\n", err)
   end
 end

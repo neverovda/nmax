@@ -3,20 +3,27 @@ module Nmax
     def run
       parameter_check
       return if wrong_args?
+      return if not_presence_stdin?
+
       @size = ARGV[0].to_i
       @numbers = []
 
       $stdin.each do |line|
         add_nums_to_result nums(line)
       end
-      puts '' if @numbers.empty?
+      print '' if @numbers.empty?
       puts @numbers
     end
 
     private
 
     def parameter_check
+      warn 'Not reading from stdin' if not_presence_stdin?
       warn 'Nmax must receive one argument (number). Example: nmax 100' if wrong_args?
+    end
+
+    def not_presence_stdin?
+      $stdin.tty?
     end
 
     def wrong_args?
@@ -38,7 +45,9 @@ module Nmax
     end
 
     def add(num)
-      insert_at = @numbers.bsearch_index { |n| num >= n }
+      return if @numbers.include?(num)
+
+      insert_at = @numbers.bsearch_index { |n| num > n }
       @numbers.insert(insert_at, num) if insert_at
       @numbers << num unless insert_at
       shorten
