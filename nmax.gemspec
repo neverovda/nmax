@@ -12,6 +12,4 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.homepage    = 'https://github.com/neverovda/nmax'
   s.license     = 'MIT'
-
-  s.add_development_dependency 'coveralls'
 end

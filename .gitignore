@@ -1,3 +1,4 @@
 /test/sample_files
 *.gem
 /coverage
+Gemfile.lock
