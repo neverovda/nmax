@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/neverovda/nmax.svg?branch=master)](https://travis-ci.org/neverovda/nmax)
+
 # nmax
 Output N maximum numbers from input stream
 
