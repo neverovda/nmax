@@ -4,7 +4,27 @@
 # nmax
 Output N maximum numbers from input stream
 
-скрипт nmax, делает следующее: 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem ' nmax_cli'
+```
+
+And then execute:
+
+    $ bundle install
+
+Or install it yourself as:
+
+    $ gem install nmax_cli
+
+## Example
+
+    cat sample_data_40GB.txt | nmax 10000 
+
+## скрипт nmax, делает следующее: 
 * читает из входящего потока текстовые данные
 * по завершении ввода выводит n самых больших целых чисел, встретившихся в полученных текстовых данных
 
