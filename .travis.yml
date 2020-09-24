@@ -1,7 +1,10 @@
+sudo: false
+dist: trusty
+
 language: ruby
 deploy:
   provider: rubygems
-  api_key:
-    secure: NA7h5AvyeLfNO5/mMdEMxleN40Wq16rUGPVRhcwKknSlWZUyEDVxu02RhGF+P+O/rIL2RGpFC0P7GUg9htcSVFfIqVbWFS/jizkScDSEzs0yreSKUk+xzVDBZ2pZZ9mvalQUh4lnq+WjNOITWe4JnRjt2Zi4bAqH9uT2k25f4hiUTTyNm21DWkMH5mzWE4IHKW2vv53mFgMuspWbvIHLArMBYvSCockli/a4nYQhA+UmNiGUuCkN/F9/PzC93kSYcBRQtiffa0KMA4GQkXWr6ceaBjmty1i4tKrHzKUu6h3zAPt0niOik1csjL6k66AzyLT1NB7HHkB9TZ93521zfqgAb7U1xkHSrPqwIA1HEiI+kFzRdWk/xgQsUKU5Pxy7CtLd2M6BH/JXkVDAogsF9nHarmpAxT7WOTJf2dQNOdnVFf1Vwo5hq/F+g7sPv0dgtCUkYWE0NxC5HnIeS0zddOy0gP/tfvadb5jXhk2w8VqgvyIrQmTilfwLV5yBy80Q+XRqbU+5lUYqnqSNdnWBoY5jw9ZhRTwn3gMzvWgGuVnnpm3Kqj8w5YARvMffqBk7vnxXgUgrzgqPDIoBY7Kzh4AQCenXIE3jGpVrRK+CfPEcD6u6NBYqKOnz+nX49VwvvgfjUiXGcSHPl/rE8m6eVaNLtZnMxeoYHrco5YXr2W4=
-  on:
-    tags: true
+  api_key: $RUBYGEMS_API_KEY
+  on: deploy-gem-release
+  skip_cleanup: true
+  
