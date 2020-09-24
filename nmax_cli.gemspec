@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'nmax_cli'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.executables << 'nmax'
   s.date        = '2020-09-22'
   s.summary     = 'Nmax - Simple gem for search bigest integers from input stream'
